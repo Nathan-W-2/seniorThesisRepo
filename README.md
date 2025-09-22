@@ -87,11 +87,11 @@ The following sections detail the specific use cases that the system will suppor
 
 ## Use Cases
 
-### Use Case 1.1: Secure Login
-- **Actors**: Student or registrar
-- **Overview**: Actor uses password to verify their identity.
+### Use Case 1.1: Calculate Win Percentage
+- **Actors**: Server/Application
+- **Overview**: The game calculation the current odds of the player winning based on the amount of players and/or the current progress of all the player's board
 
-**Typical Course of Events**:
+<!-- **Typical Course of Events**:
 1. Page prompts for username and password.
 2. User enters their username and password and hits enter/login.
 3. System verifies that the username and password are correct.
@@ -99,13 +99,13 @@ The following sections detail the specific use cases that the system will suppor
 **Alternative Courses**:
 - **Step 3**: User and/or password are not correct.
   1. Displays error.
-  2. Go back to step 1.
+  2. Go back to step 1. -->
 
-### Use Case 1.2: Find a Course
-- **Actors**: Student
-- **Overview**: Student finds a desired class.
+### Use Case 1.2: Players Join a Game Lobby
+- **Actors**: Player
+- **Overview**: Players use some sort of code to join a lobby associated with a game of bingo
 
-**Typical Course of Events**:
+<!-- **Typical Course of Events**:
 1. Run Use Case 1.1, *Secure Login*.
 2. Displays list of current and upcoming semesters.
 3. Student selects a semester.
@@ -118,13 +118,13 @@ The following sections detail the specific use cases that the system will suppor
 **Alternative Courses**:
 - Any step: Student can start a new search at any time
   1. Student clicks "start new search."
-  2. Go back to step 2.
+  2. Go back to step 2. -->
 
-### Use Case 1.3: Register for a Course
-- **Actors**: Student
-- **Overview**: Student registers for a course.
+### Use Case 1.3: Program plays out the game of Bingo
+- **Actors**: Admin and Server/Application
+- **Overview**: The game of Bingo plays out, with certain balls being called (automatically or manually), allowing players to mark of their cards based on numbers that have been called, and stopping when a player achieves bingo
 
-**Typical Course of Events**:
+<!-- **Typical Course of Events**:
 1. Run Use Case 1.2, *Find a Course*.
 2. Student clicks on "register for course" button.
 3. Verify that student can take the course.
@@ -132,23 +132,23 @@ The following sections detail the specific use cases that the system will suppor
 
 **Alternative Courses**:
 - **Step 4**: Student can't take course
-  1. Displays "You cannot take this course, please contact the registrar for further information."
+  1. Displays "You cannot take this course, please contact the registrar for further information." -->
 
-### Use Case 1.4: Check Grades
-- **Actors**: Student
-- **Overview**: Student checks grades.
+### Use Case 1.4: Players play Bingo
+- **Actors**: Player
+- **Overview**: The player marks of their card(s) based on numbers that have been called, and when they achieve bingo, it is "called out", manually or automatically 
 
-**Typical Course of Events**:
+<!-- **Typical Course of Events**:
 1. Run Use Case 1.1, *Secure Login*.
 2. Display previous semesters in which the student took course(s).
 3. Student selects semester.
-4. Displays courses and grades.
+4. Displays courses and grades. -->
 
-### Use Case 1.5: Registrar Creates Sections
-- **Actors**: Registrar
-- **Overview**: Registrar creates section.
+### Use Case 1.5: Alternate game modes 
+- **Actors**: Admin and Application
+- **Overview**: Abilty to choose between different way to play the game, such as blackout, four corners, ability to have more than one card, etc. 
 
-**Typical Course of Events**:
+<!-- **Typical Course of Events**:
 1. Run Use Case 1.1, *Secure Login*.
 2. Registrar selects "Create Section."
 3. Display "Create Section" form.
@@ -159,13 +159,13 @@ The following sections detail the specific use cases that the system will suppor
 **Alternative Courses**:
 - **Step 6**: Entry invalid
   1. Display error.
-  2. Go back to step 3.
+  2. Go back to step 3. -->
 
-### Use Case 1.6: Registrar Modifies Section
-- **Actors**: Registrar
-- **Overview**: Registrar modifies existing sections.
+### Use Case 1.6: Admin Login
+- **Actors**: Admin and Application/Server
+- **Overview**: An admin can sign in to the program, and can start new games and control can select game modes, play out the game of bingo, etc. 
 
-**Typical Course of Events**:
+<!-- **Typical Course of Events**:
 1. Run Use Case 1.1, *Secure Login*.
 2. Registrar selects "Modify section."
 3. Displays all sections (with order options).
@@ -177,4 +177,4 @@ The following sections detail the specific use cases that the system will suppor
 **Alternative Courses**:
 - **Step 7**: Invalid Data
   1. Display Error.
-  2. Go back to step 5.
+  2. Go back to step 5. -->
