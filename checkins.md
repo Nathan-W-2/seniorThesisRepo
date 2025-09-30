@@ -6,7 +6,7 @@ Completing Specification and exploring different framworks/platforms to develop 
 
 ### This week I learned:
 
-Djando is a framework made with Python and handles common web development taks for you, such as authentication and site maps. Ruby on Rails has the advantage that I've worked with it before and it has a well established community and resources.
+Django is a framework made with Python and handles common web development taks for you, such as authentication and site maps. Ruby on Rails has the advantage that I've worked with it before and it has a well established community and resources.
 
 ### My successes this week were:
 
