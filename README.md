@@ -1,4 +1,4 @@
-# Senior Thesis Repo: [PLACE YOUR PROJECT NAME HERE]
+<!-- # Senior Thesis Repo: [PLACE YOUR PROJECT NAME HERE]
 This repository is provided to help you build your senior thesis project. You will edit it to store your specification documents, code, and weekly checkins.
 
 First, fork this repo (this makes a copy of it associated with your account) and then clone it to your machine (this makes a copy of your fork on your personal machine). You can then use an editor and a GitHub client to manage the repository.
@@ -33,23 +33,45 @@ If you have any questions feel free to ask me! I'll answer professor questions, 
 
 # Sample Spec
 
-Below is an example of a project specification.  
+Below is an example of a project specification.   -->
 
-## Software Requirements Specification for the Mahoney University Registration System
+## Software Requirements Specification for the Bingo Simulator and Calculator
 
 ## Introduction
 
 ### Purpose
-The purpose of this document is to outline the functional and non-functional requirements of Mahoney University’s new online registration system. The system is designed to streamline the registration process for students and faculty, replacing the outdated manual system. This specification serves as a contract between the system stakeholders and the developers to ensure that the system meets the needs of its users while adhering to university policies and technical constraints.
+<!-- 
+The purpose of this document is to outline the functional and non-functional requirements of Mahoney University’s new online registration system. The system is designed to streamline the registration process for students and faculty, replacing the outdated manual system. This specification serves as a contract between the system stakeholders and the developers to ensure that the system meets the needs of its users while adhering to university policies and technical constraints. -->
+The purpose of this document is to outline the functional and non-functional requirements of the Bingo Simulator and Calculator. The system is designed to simulate a game of bingo entirely online in a web based application and caclulate the players' odds of winning. 
 
 The key goals of the new system are:
+- To have a functional bingo game that has a host organizing the game of bingo and players able to join and play. 
+- A storage of data during the game that allows for the calculation of any given player's winning odds and displaying it to the player (or everyone)
+- Register and Login admin users that can host and organize games for players to join and play in
+- Have additional game modes that change the conditions for winning the game as well as the odds of winning
+
+<!-- The key goals of the new system are:
 - To improve the efficiency of the course registration process for students.
 - To provide staff in the Registrar’s Office with tools to manage course offerings, schedules, and student records.
 - To enhance the accuracy and accessibility of student academic information, such as grades and enrollment history.
-- To support the university’s transition to digital infrastructure while maintaining compatibility with legacy systems during a transitional period.
+- To support the university’s transition to digital infrastructure while maintaining compatibility with legacy systems during a transitional period. -->
 
 ### Scope
-This system is intended to support the registration process for all students at Mahoney University, including undergraduates, graduate students, and non-degree-seeking students. The system will handle:
+
+This system is intended to make a game available for a game to be played by anyone with a web browser. The system will handle:
+- Keeping track of players who will be able to join games without having to create any type of account.
+- Calling balls and thus storing which balls have been called to keep track of who wins. 
+- The calculation of who has the best odds of winning based on how many people are playing the game and/or other people's bingo board. 
+<!-- - Enrollment validation, including prerequisite checks and course availability.
+- Management of student schedules, including the ability to add, drop, or modify course enrollments.
+- Grade viewing and transcript requests. -->
+
+The scope of the system also includes an interface to:
+- Create new games if a user has admin priveleges
+- Manually call out balls
+- Play the game of bingo, allowing players to mark off cards based on the balls that have been called
+- Show the current percent chance of winning
+<!-- This system is intended to support the registration process for all students at Mahoney University, including undergraduates, graduate students, and non-degree-seeking students. The system will handle:
 - Student authentication and secure access to personal records.
 - Course search and registration.
 - Enrollment validation, including prerequisite checks and course availability.
@@ -59,29 +81,28 @@ This system is intended to support the registration process for all students at 
 The scope of the system also includes administrative tools for the Registrar’s Office to:
 - Create and modify course offerings for each academic term.
 - Manage enrollment caps, waitlists, and course prerequisites.
-- Track student progress and generate reports for academic performance.
+- Track student progress and generate reports for academic performance. -->
 
 ### Definitions, Acronyms, and Abbreviations
-- **Registrar**: The official responsible for maintaining student records, managing course schedules, and overseeing the registration process.
-- **Student Information System (SIS)**: A university-wide database that stores student records, course information, and academic data.
-- **GPA**: Grade Point Average, a numerical representation of a student's academic performance.
-- **Semester**: A division of the academic year, typically consisting of a Fall and Spring term, in which courses are offered and completed.
-- **Waitlist**: A system that allows students to reserve a spot in a full course, subject to availability if another student drops the course.
-- **Prerequisite**: A course or requirement that must be completed before a student can enroll in a more advanced course.
+- **Bingo Card**: A 5 x 5 card that contains 25 numbers (or 24 if there's a free space) ranging 1-75, the 5 columns are labled B-I-N-G-0, and certain ranges of number pertain to a specific column. B: 1-15, I: 16-30, N: 31-45, G: 46-60 O: 61-75.
+- **Winning Odds**: A percentage value that should be the amount of times you win in a given scenario based on the progress of one's bingo card, how many balls have been called, the amount of players playing, other player's progress, etc.
+- **Alternate Game Modes**: Other variations of bingo that aren't 5 in a row, such as blackout or four corners
+- **Admin User**: A user that has an account registered with a database that allows them to create new games, choose game mode, and manually control the game of bingo once the game has been started.
+- **Lobby**: A 'waiting room' of sorts where that allows players join the game before officially starting
+<!-- - **Waitlist**: A system that allows students to reserve a spot in a full course, subject to availability if another student drops the course.
 - **User Role**: A designation for system access levels, such as student, registrar, or faculty member, each with different permissions within the system.
-- **Concurrent Enrollment**: The ability for students to be enrolled in multiple courses during the same academic term.
+- **Concurrent Enrollment**: The ability for students to be enrolled in multiple courses during the same academic term. -->
 
 ## Overview
-The Mahoney University Registration System is a web-based platform designed to automate the course registration process for students and faculty. It serves as the primary interface for students to manage their academic schedules and for university staff to oversee the course offerings and registration workflows.
+The Bingo Simulator and Calculator is a web-based application make the game of bingo accessible via any web browser. Organizers have the ability to host games with a wide variety of different game modes, and it is easy for a player to join and play
+<!-- The Mahoney University Registration System is a web-based platform designed to automate the course registration process for students and faculty. It serves as the primary interface for students to manage their academic schedules and for university staff to oversee the course offerings and registration workflows. -->
 
 ### System Features:
-1. **Secure Login**: Ensures that only authorized users (students, faculty, and staff) have access to the system, with user authentication based on university credentials.
-2. **Course Search**: Allows students to browse available courses by department, term, and subject, with filtering options based on course availability, schedule, and prerequisites.
-3. **Course Registration**: Students can add or drop courses, view class schedules, and receive notifications of any conflicts or unmet prerequisites.
-4. **Grades and Transcripts**: Provides students with access to their grades from current and past semesters, as well as the ability to request official transcripts.
-5. **Registrar Management Tools**: The Registrar’s Office can create, modify, and delete course sections, set enrollment limits, and manage waitlists.
+1. **Secure Login**: Ensures that only authorized users under the database have the ability to create and select the games modes for games.
+2. **Admin Interface**: Simple interface that shows options to create a game and select a game mode.
+3. **Player Interface**: Players will be able to see that there in the lobby before the game starts, and once the game starts, they will see their bingo card and their current odds of winning
 
-The system is designed with scalability in mind, allowing it to handle thousands of students registering simultaneously during peak periods. It will integrate with the university’s existing Student Information System (SIS) and is built using modern web technologies to ensure ease of use, reliability, and performance.
+The system is designed with scalability in mind, allowing it to handle hundreds of players at once. 
 
 The following sections detail the specific use cases that the system will support, describing how students and staff will interact with the system during typical operations.
 
