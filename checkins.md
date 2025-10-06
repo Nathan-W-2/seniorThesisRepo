@@ -21,19 +21,19 @@ Having to sift through documentation and tutorials to get the general idea.
 ## Week 2 Summary (10/06/2025)
 ### This week I worked on:
 
-Choosing between Django and Ruby on Rails. Sheduling and doing my elevator pitch. 
+Choosing between Django and Ruby on Rails. Scheduling and giving my elevator pitch. 
 
 ### This week I learned:
 
-[Your answer here]
+It is hard to balance the time needed for this class with all the other classes this semester. 
 
 ### My successes this week were:
 
-[Your answer here]
+Finalized my specification, scheduled and gave my elevator pitch, started the Django tutorial. 
 
 ### The challenges I faced this week were:
 
-[Your answer here]
+Finding appropriate times to dedicate solely to working on my thesis project. 
 
 ---
 
