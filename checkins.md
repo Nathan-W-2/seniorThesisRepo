@@ -37,22 +37,22 @@ Finding appropriate times to dedicate solely to working on my thesis project.
 
 ---
 
-## Week 3 Summary (MM/DD/YYYY)
+## Week 3 Summary (10/13/2025)
 ### This week I worked on:
 
-[Your answer here]
+Completing the tutorials of Django and Ruby on Rails to get a grasp on what the purpose of the frameworks are.
 
 ### This week I learned:
 
-[Your answer here]
+Ruby on Rails and Django are very similar in what they aim to accomplish, with som minor quirks that set them apart.
 
 ### My successes this week were:
 
-[Your answer here]
+I did not have much issue following the tutorials and was able to get a working versions for both (minus deploying them on a production server).
 
 ### The challenges I faced this week were:
 
-[Your answer here]
+Working with "pre-built" software is mostly uncharted territory for me and if I continue with either of the frameworks, I will have to put a lot of effort into fully understanding the framework I'm utilizing. 
 
 ---
 
