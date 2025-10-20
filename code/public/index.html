@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" 
+        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <script src="/components/BingoSquare.js" type="module"></script>
+    <script src="/components/BingoCard.js" type="module"></script>
+    <script src="/components/BingoForm.js" type="module"></script>
+    
+
+    <title>Bingo</title>
+</head>
+
+<body>
+    <!-- bootstrap container -->
+    <div id="cardContainer" class="container d-flex flex-wrap">
+        
+    </div>
+
+    <hr />
+    
+    <form id="ballCall" class="border rounded w-25 m-2 p-2"> 
+        <label for="ballNum">Enter in called ball #:</label>
+        <input class="w-25" type="number" name="ballNum" id="ballNum">
+        <button id="ballCallButton" class="button">Submit</button> 
+        
+    </form> 
+    
+    <hr />
+
+    <bingo-form></bingo-form>
+
+    <hr />
+
+</body>
+
+<script>
+    // var gameId;
+    document.addEventListener('DOMContentLoaded', async (event) => {
+        try {
+            const response = await fetch('/allcards');
+            if(response.ok) {
+                const allCards = await response.json();
+                loadAllCards(allCards);
+            } else {
+                console.error('Error fetching cards:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    });
+
+    document.getElementById("ballCallButton").addEventListener("click", async (e) => {
+        e.preventDefault(); 
+        try {
+ 
+            const ballNum = document.getElementById('ballNum').value
+
+            const ballquery = { 
+                ballNum
+            }; 
+
+            const fetchConfigData = { 
+                method: "POST", 
+                body: JSON.stringify(ballquery),  
+                headers: { 
+                    "Content-Type": "application/json" 
+                } 
+            }; 
+ 
+            const response = await fetch("/allcalledballs", fetchConfigData); 
+            if(response.ok) { 
+                const balls = await response.json();
+
+                const cards = document.querySelectorAll('bingo-card');
+                cards.forEach(card => {
+                    const squares = card.shadowRoot.querySelectorAll('bingo-square');
+                    squares.forEach(square => {
+                        if (square.getAttribute('bingo-number') == 'FREE') {
+                            square.setAttribute('has-been-called', '1');
+                        } else {
+                            let num = parseInt(square.getAttribute('bingo-number'));
+                            if (balls.includes(num)) {
+                                square.setAttribute('has-been-called', '1');
+                            } 
+                        }
+                    });
+                });
+
+                document.getElementById('ballNum').value = '';
+                
+            } else { 
+                console.log("Error with the response data"); 
+            }
+        } catch (err) { 
+            console.log(`Error: ${err}`); 
+        }
+    });
+
+    document.addEventListener('add-new-card', async (event) => {
+        try {
+            const newCard = event.detail;
+
+            const response = await fetch('/allcards', {
+                method: 'POST',
+                body: JSON.stringify(newCard),
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            if (response.ok) {
+                const allCards = await response.json();
+                loadAllCards(allCards);
+            } else {
+                console.log('Error with the response data');
+            }
+        } catch (err) {
+            console.log(`Error: ${err}`);
+        }
+    });
+    
+    document.addEventListener('clear-all-cards', async (event) => {
+        try {
+            const Id = event.detail;
+
+            const fetchConfigData = { 
+                method: "POST", 
+                body: JSON.stringify(Id),  
+                headers: { 
+                    "Content-Type": "application/json" 
+                } 
+            }; 
+
+            const response = await fetch("/deletecards", fetchConfigData); 
+                if(response.ok) { 
+                loadAllCards([]);
+            } else { 
+                console.log("Error with the response data"); 
+            }
+        } catch (err) { 
+        console.log(`Error: ${err}`); 
+        }
+    });
+
+    function loadAllCards(cards) { 
+        const table = document.getElementById("cardContainer"); 
+ 
+        table.innerHTML = ""; 
+ 
+        cards.forEach(card => { 
+            const cardElement = document.createElement("bingo-card"); 
+            cardElement.setAttribute('bingo-card-nums', card.PlayerCard);
+            table.appendChild(cardElement); 
+        }); 
+    }
+</script>
+
+</html>
