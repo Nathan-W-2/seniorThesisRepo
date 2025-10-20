@@ -56,22 +56,22 @@ Working with "pre-built" software is mostly uncharted territory for me and if I 
 
 ---
 
-## Week 4 Summary (MM/DD/YYYY)
+## Week 4 Summary (10/20/2025)
 ### This week I worked on:
 
-[Your answer here]
+Meeting with professor Mahoney to dicuss what my an implementation of my project could look like using a wep app, because I was not sensing a direction forward based on the tutorials I completed. 
 
 ### This week I learned:
 
-[Your answer here]
+Attempting to learn Django or Ruby on Rails might not be a good move, in order to get a good start on the project. Professor Mahoney said I could start my implementation using Node.js, what we were using in Web Dev, in order to get my project started. He also told me about Pub/Sub, Observer, and Firebase, which I could use in my implementation. 
 
 ### My successes this week were:
 
-[Your answer here]
+I feel like I can grasp where I'm supposed to start and I can get the wheels moving on the project.
 
 ### The challenges I faced this week were:
 
-[Your answer here]
+Getting over the "sunk cost" of trying to learn a new framework and having to start from scratch as I shake off the rust from what I'm more familiar with
 
 ---
 
