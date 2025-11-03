@@ -75,41 +75,41 @@ Getting over the "sunk cost" of trying to learn a new framework and having to st
 
 ---
 
-## Week 5 Summary (MM/DD/YYYY)
+## Week 5 Summary (10/27/2025)
 ### This week I worked on:
 
-[Your answer here]
+Thinking about how I want to do my thesis using basic javacript, html, and css to start. 
 
 ### This week I learned:
 
-[Your answer here]
+My other classes and other commitments are still a lot to handle at once so this prooject has unfortunately taken the back seat. 
 
 ### My successes this week were:
 
-[Your answer here]
+I uploaded the code I will be working off of and looked over it. Refreshing my memory on how I originally did the project has helped me start thinking in the languages and frameworks I will need for the project. I consider that a win. 
 
 ### The challenges I faced this week were:
 
-[Your answer here]
+My free time to work on this is severely limited, but hopefully that changes soon. 
 
 ---
 
-## Week 6 Summary (MM/DD/YYYY)
+## Week 6 Summary (11/03/2025)
 ### This week I worked on:
 
-[Your answer here]
+Essentially nothing, same as last week. 
 
 ### This week I learned:
 
-[Your answer here]
+Physics exams are hard to prepare for with limited free time. 
 
 ### My successes this week were:
 
-[Your answer here]
+The physics exam is done! Hopefully that can free up a bit of time this week. 
 
 ### The challenges I faced this week were:
 
-[Your answer here]
+Physics exam. (Did I mention that yet?)
 
 ---
 
