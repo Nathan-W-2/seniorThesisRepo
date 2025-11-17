@@ -113,41 +113,41 @@ Physics exam. (Did I mention that yet?)
 
 ---
 
-## Week 7 Summary (MM/DD/YYYY)
+## Week 7 Summary (11/10/2025)
 ### This week I worked on:
 
-[Your answer here]
+Making sure the packages are up to date, making sure nothing broke in the process over transferring the project over to the GitHub repo, configuring the Github repo. 
 
 ### This week I learned:
 
-[Your answer here]
+Not much
 
 ### My successes this week were:
 
-[Your answer here]
+I have a running version of the project I will building off of
 
 ### The challenges I faced this week were:
 
-[Your answer here]
+My other classes are still a handful
 
 ---
 
-## Week 8 Summary (MM/DD/YYYY)
+## Week 8 Summary (11/17/2025)
 ### This week I worked on:
 
-[Your answer here]
+Modifying the previous project to get a UI that is closer to what I had in mind for this current project. 
 
 ### This week I learned:
 
-[Your answer here]
+A little about pub/sub and how I might try to implement it in my own projext
 
 ### My successes this week were:
 
-[Your answer here]
+Finally managed to get a first solid step forward on this project since starting this project. Better late than never.
 
 ### The challenges I faced this week were:
 
-[Your answer here]
+One of the front tires on my car blew out, ruining most plans I had for the weekend, which included making some major headway on the project. 
 
 ---
 
