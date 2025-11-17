@@ -22,21 +22,31 @@
 <body>
     <!-- bootstrap container -->
     <div id="cardContainer" class="container d-flex flex-wrap">
-        
+        <bingo-card
+        bingo-card-nums="3 28 31 52 72 4 29 40 54 65 14 30 FREE 51 64 12 18 45 56 71 5 26 44 50 73">
+
+        </bingo-card>
+        <!-- 3 28 31 52 72 4 29 40 54 65 14 30 FREE 51 64 12 18 45 56 71 5 26 44 50 73 -->
+        <!-- 11 18 35 55 66 6 17 43 53 74 10 20 FREE 48 67 14 26 38 56 65 9 25 40 59 70 -->
+        <!-- 4 23 34 59 69 7 16 45 60 62 12 29 FREE 49 66 5 26 42 53 70 1 17 31 55 64 -->
+        <!-- 15 16 35 59 67 8 27 39 51 68 2 23 FREE 53 74 5 30 41 48 66 9 19 40 47 64 -->
+        <!-- 7 28 44 46 75 5 17 32 55 64 3 30 FREE 59 70 13 23 37 48 66 8 16 31 52 73 -->
+        <!-- 1 25 32 56 73 12 21 41 49 72 4 16 FREE 59 62 3 24 38 46 69 10 28 39 51 61 -->
     </div>
 
     <hr />
     
-    <form id="ballCall" class="border rounded w-25 m-2 p-2"> 
+    <!-- <form id="ballCall" class="border rounded w-25 m-2 p-2"> 
         <label for="ballNum">Enter in called ball #:</label>
         <input class="w-25" type="number" name="ballNum" id="ballNum">
-        <button id="ballCallButton" class="button">Submit</button> 
         
-    </form> 
+    </form>  -->
+
+    <button id="demo1" class="button">Demo 1</button> 
     
     <hr />
 
-    <bingo-form></bingo-form>
+    <!-- <bingo-form></bingo-form> -->
 
     <hr />
 
@@ -49,7 +59,7 @@
             const response = await fetch('/allcards');
             if(response.ok) {
                 const allCards = await response.json();
-                loadAllCards(allCards);
+                // loadAllCards(allCards);
             } else {
                 console.error('Error fetching cards:', response.statusText);
             }
@@ -58,96 +68,160 @@
         }
     });
 
-    document.getElementById("ballCallButton").addEventListener("click", async (e) => {
+    // document.getElementById("ballCallButton").addEventListener("click", async (e) => {
+    //     e.preventDefault(); 
+    //     try {
+ 
+    //         const ballNum = document.getElementById('ballNum').value
+
+    //         const ballquery = { 
+    //             ballNum
+    //         }; 
+
+    //         const fetchConfigData = { 
+    //             method: "POST", 
+    //             body: JSON.stringify(ballquery),  
+    //             headers: { 
+    //                 "Content-Type": "application/json" 
+    //             } 
+    //         }; 
+ 
+    //         const response = await fetch("/allcalledballs", fetchConfigData); 
+    //         if(response.ok) { 
+    //             const balls = await response.json();
+
+    //             const cards = document.querySelectorAll('bingo-card');
+    //             cards.forEach(card => {
+    //                 const squares = card.shadowRoot.querySelectorAll('bingo-square');
+    //                 squares.forEach(square => {
+    //                     if (square.getAttribute('bingo-number') == 'FREE') {
+    //                         square.setAttribute('has-been-called', '1');
+    //                     } else {
+    //                         let num = parseInt(square.getAttribute('bingo-number'));
+    //                         if (balls.includes(num)) {
+    //                             square.setAttribute('has-been-called', '1');
+    //                         } 
+    //                     }
+    //                 });
+    //             });
+
+    //             document.getElementById('ballNum').value = '';
+                
+    //         } else { 
+    //             console.log("Error with the response data"); 
+    //         }
+    //     } catch (err) { 
+    //         console.log(`Error: ${err}`); 
+    //     }
+    // });
+    document.getElementById("demo1").addEventListener("click", async (e) => {
         e.preventDefault(); 
         try {
  
-            const ballNum = document.getElementById('ballNum').value
+            // const ballNum = document.getElementById('ballNum').value
 
-            const ballquery = { 
-                ballNum
-            }; 
+            // const ballquery = { 
+            //     ballNum
+            // }; 
 
-            const fetchConfigData = { 
-                method: "POST", 
-                body: JSON.stringify(ballquery),  
-                headers: { 
-                    "Content-Type": "application/json" 
-                } 
-            }; 
+            // const fetchConfigData = { 
+            //     method: "POST", 
+            //     body: JSON.stringify(ballquery),  
+            //     headers: { 
+            //         "Content-Type": "application/json" 
+            //     } 
+            // }; 
  
-            const response = await fetch("/allcalledballs", fetchConfigData); 
-            if(response.ok) { 
-                const balls = await response.json();
+            // const response = await fetch("/allcalledballs", fetchConfigData); 
+            // if(response.ok) { 
+            //     const balls = await response.json();
 
-                const cards = document.querySelectorAll('bingo-card');
-                cards.forEach(card => {
-                    const squares = card.shadowRoot.querySelectorAll('bingo-square');
-                    squares.forEach(square => {
-                        if (square.getAttribute('bingo-number') == 'FREE') {
-                            square.setAttribute('has-been-called', '1');
-                        } else {
-                            let num = parseInt(square.getAttribute('bingo-number'));
-                            if (balls.includes(num)) {
-                                square.setAttribute('has-been-called', '1');
-                            } 
-                        }
-                    });
-                });
+            //     const cards = document.querySelectorAll('bingo-card');
+            //     cards.forEach(card => {
+            //         const squares = card.shadowRoot.querySelectorAll('bingo-square');
+            //         squares.forEach(square => {
+            //             if (square.getAttribute('bingo-number') == 'FREE') {
+            //                 square.setAttribute('has-been-called', '1');
+            //             } else {
+            //                 let num = parseInt(square.getAttribute('bingo-number'));
+            //                 if (balls.includes(num)) {
+            //                     square.setAttribute('has-been-called', '1');
+            //                 } 
+            //             }
+            //         });
+            //     });
 
-                document.getElementById('ballNum').value = '';
+            //     document.getElementById('ballNum').value = '';
                 
-            } else { 
-                console.log("Error with the response data"); 
-            }
+            // } else { 
+            //     console.log("Error with the response data"); 
+            // }
+
+            // console.log("test")
+            const balls = [1,2,3,4,5]
+
+            const cards = document.querySelectorAll('bingo-card');
+            cards.forEach(card => {
+                const squares = card.shadowRoot.querySelectorAll('bingo-square');
+                squares.forEach(square => {
+                    if (square.getAttribute('bingo-number') == 'FREE') {
+                        square.setAttribute('has-been-called', '1');
+                    } else {
+                        let num = parseInt(square.getAttribute('bingo-number'));
+                        if (balls.includes(num)) {
+                            square.setAttribute('has-been-called', '1');
+                        } 
+                    }
+                });
+            });
         } catch (err) { 
             console.log(`Error: ${err}`); 
         }
     });
 
-    document.addEventListener('add-new-card', async (event) => {
-        try {
-            const newCard = event.detail;
+    // document.addEventListener('add-new-card', async (event) => {
+    //     try {
+    //         const newCard = event.detail;
 
-            const response = await fetch('/allcards', {
-                method: 'POST',
-                body: JSON.stringify(newCard),
-                headers: { 'Content-Type': 'application/json' }
-            });
+    //         const response = await fetch('/allcards', {
+    //             method: 'POST',
+    //             body: JSON.stringify(newCard),
+    //             headers: { 'Content-Type': 'application/json' }
+    //         });
 
-            if (response.ok) {
-                const allCards = await response.json();
-                loadAllCards(allCards);
-            } else {
-                console.log('Error with the response data');
-            }
-        } catch (err) {
-            console.log(`Error: ${err}`);
-        }
-    });
+    //         if (response.ok) {
+    //             const allCards = await response.json();
+    //             // loadAllCards(allCards);
+    //         } else {
+    //             console.log('Error with the response data');
+    //         }
+    //     } catch (err) {
+    //         console.log(`Error: ${err}`);
+    //     }
+    // });
     
-    document.addEventListener('clear-all-cards', async (event) => {
-        try {
-            const Id = event.detail;
+    // document.addEventListener('clear-all-cards', async (event) => {
+    //     try {
+    //         const Id = event.detail;
 
-            const fetchConfigData = { 
-                method: "POST", 
-                body: JSON.stringify(Id),  
-                headers: { 
-                    "Content-Type": "application/json" 
-                } 
-            }; 
+    //         const fetchConfigData = { 
+    //             method: "POST", 
+    //             body: JSON.stringify(Id),  
+    //             headers: { 
+    //                 "Content-Type": "application/json" 
+    //             } 
+    //         }; 
 
-            const response = await fetch("/deletecards", fetchConfigData); 
-                if(response.ok) { 
-                loadAllCards([]);
-            } else { 
-                console.log("Error with the response data"); 
-            }
-        } catch (err) { 
-        console.log(`Error: ${err}`); 
-        }
-    });
+    //         const response = await fetch("/deletecards", fetchConfigData); 
+    //             if(response.ok) { 
+    //             // loadAllCards([]);
+    //         } else { 
+    //             console.log("Error with the response data"); 
+    //         }
+    //     } catch (err) { 
+    //     console.log(`Error: ${err}`); 
+    //     }
+    // });
 
     function loadAllCards(cards) { 
         const table = document.getElementById("cardContainer"); 

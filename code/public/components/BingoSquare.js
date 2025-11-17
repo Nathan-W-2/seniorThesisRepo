@@ -1,6 +1,6 @@
 class BingoSquare extends HTMLElement {
     static get observedAttributes() {
-        return ['bingo-number', 'has-been-called'];
+        return ['bingo-number', 'has-been-called', 'has-been-clicked'];
     }
 
     constructor() {
@@ -22,8 +22,10 @@ class BingoSquare extends HTMLElement {
     
     render() {
       const number = this.getAttribute('bingo-number') || '1';
+      // const hasBeenClicked = this.getAttribute('has-been-clicked') || '0';
 
-      const color = this.hasBeenCalled ? 'red' : 'white';
+      // const color = this.hasBeenCalled ? 'red' : 'white';
+      const color = this.hasBeenClicked ? 'red' : 'white';
   
       this.shadowRoot.innerHTML = `
         <style>
@@ -39,7 +41,9 @@ class BingoSquare extends HTMLElement {
           }
         </style>
         <div class="container"> 
+         <button>
           ${number}
+          </button> 
         </div>
         `;
     }

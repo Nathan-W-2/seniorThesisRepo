@@ -37,6 +37,7 @@ app.get('/allcards', async (req, res) => {
     const allCards = await db.getAllCardsByGame(1);
     res.json(allCards);
 }); 
+
 app.post('/allcards', async (req, res) => { 
     const bingoCardStr = req.body.bingoCardStr;
     await db.insertCard(bingoCardStr, 1);
