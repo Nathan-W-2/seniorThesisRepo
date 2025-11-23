@@ -30,8 +30,7 @@ class BingoCard extends HTMLElement {
           <td>
             <bingo-square class="test"
               bingo-number="${ballNumArr[i*5 + j]}" 
-              has-been-called="0"
-              has-been-clicked="0">
+              has-been-called="0">
             </bingo-square>
           </td>
           `
