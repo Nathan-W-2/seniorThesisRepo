@@ -151,22 +151,22 @@ One of the front tires on my car blew out, ruining most plans I had for the week
 
 ---
 
-## Week 9 Summary (MM/DD/YYYY)
+## Week 9 Summary (12/01/2025)
 ### This week I worked on:
 
-[Your answer here]
+Getting closer to a usable UI that an individual player will see when they play the game.
 
 ### This week I learned:
 
-[Your answer here]
+I have to rethink how I am doing the logic of the program compared to the similar previous project I'd done.
 
 ### My successes this week were:
 
-[Your answer here]
+Turning some of the components into buttons which the user will interact with.
 
 ### The challenges I faced this week were:
 
-[Your answer here]
+An undocumented change to one of my files ended up breaking the entire thing, so I had to revert to a previous version of the project in order to get it working again, erasing a portion of my progress. 
 
 ---
 
