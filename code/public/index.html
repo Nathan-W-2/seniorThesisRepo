@@ -63,6 +63,34 @@
             } else {
                 console.error('Error fetching cards:', response.statusText);
             }
+
+            const cards = document.querySelectorAll('bingo-card');
+            cards.forEach(card => {
+                const squares = card.shadowRoot.querySelectorAll('bingo-square');
+                squares.forEach(square => {
+                    const idString = `bingo-square-${square.getAttribute('bingo-number')}`
+                    square.shadowRoot.getElementById(idString).addEventListener('click', () => {
+                        if (square.getAttribute('has-been-called') == '1') {
+                            // square.setAttribute('has-been-called', '1');
+                        } else {
+                            // console.log('Button clicked!');
+                            console.log(square.getAttribute('has-been-called'));
+                        }
+
+                    });
+                    
+                    // console.log("test")
+                    // square.shadowRoot.querySelectorAll('bingo-square')
+                    // if (square.getAttribute('bingo-number') == 'FREE') {
+                    //     square.setAttribute('has-been-called', '1');
+                    // } else {
+                    //     let num = parseInt(square.getAttribute('bingo-number'));
+                    //     if (balls.includes(num)) {
+                    //         square.setAttribute('has-been-called', '1');
+                    //     } 
+                    // }
+                });
+            });
         } catch (error) {
             console.error('Error:', error);
         }
@@ -178,6 +206,50 @@
             console.log(`Error: ${err}`); 
         }
     });
+
+    const cards = document.querySelectorAll('bingo-card');
+    cards.forEach(card => {
+        // console.log("test")
+        // const squares = card.shadowRoot.querySelectorAll('bingo-square');
+        // squares.forEach(square => {
+        //     console.log("test")
+        //     // if (square.getAttribute('bingo-number') == 'FREE') {
+        //     //     square.setAttribute('has-been-called', '1');
+        //     // } else {
+        //     //     let num = parseInt(square.getAttribute('bingo-number'));
+        //     //     if (balls.includes(num)) {
+        //     //         square.setAttribute('has-been-called', '1');
+        //     //     } 
+        //     // }
+        // });
+    });
+
+    // buttons.forEach(button => {
+    //     button.addEventListener('click', () => {
+    //         console.log('Button clicked!');
+    //     });
+    // });
+    // const squares = card.shadowRoot.querySelectorAll('bingo-square');
+    //     squares.forEach(square => {
+    //         console.log(getAttribute('bingo-number'))
+    //         // if (square.getAttribute('bingo-number') == 'FREE') {
+    //         //     square.setAttribute('has-been-called', '1');
+    //         // } else {
+    //         //     let num = parseInt(square.getAttribute('bingo-number'));
+    //         //     if (balls.includes(num)) {
+    //         //         square.setAttribute('has-been-called', '1');
+    //         //     } 
+    //         // }
+    //     });
+    // document.getElementById("bingo-square-button").addEventListener("click", async (e) => {
+    //     e.preventDefault(); 
+    //     try {
+    //         console.log("test")
+    
+    //     } catch (err) { 
+    //         console.log(`Error: ${err}`); 
+    //     }
+    // });
 
     // document.addEventListener('add-new-card', async (event) => {
     //     try {

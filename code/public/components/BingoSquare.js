@@ -39,12 +39,20 @@ class BingoSquare extends HTMLElement {
               border-radius: 5px;
               border: 2px solid rgb(0, 0, 0);
           }
+          .bingo-square-button {
+              width: 50px;
+              height: 50px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              background-color: ${color};
+              border-radius: 5px;
+              border: 2px solid rgb(0, 0, 0);
+          }
         </style>
-        <div class="container"> 
-         <button>
+        <button id="bingo-square-${number}" class="bingo-square-button"> 
           ${number}
-          </button> 
-        </div>
+        </button>
         `;
     }
 }
