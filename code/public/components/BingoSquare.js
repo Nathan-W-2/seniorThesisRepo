@@ -7,6 +7,7 @@ class BingoSquare extends HTMLElement {
       super();
       this.attachShadow({ mode: 'open' });
       this.hasBeenCalled = false;
+      this.hasBeenClicked = false;
     }
   
     connectedCallback() {
@@ -16,6 +17,10 @@ class BingoSquare extends HTMLElement {
     attributeChangedCallback(name, oldValue, newValue) {
       if (name === 'has-been-called') {
         this.hasBeenCalled = parseInt(newValue) ? true : false;
+        this.render();
+      }
+      if (name === 'has-been-clicked') {
+        this.hasBeenClicked = parseInt(newValue) ? true : false;
         this.render();
       }
     }

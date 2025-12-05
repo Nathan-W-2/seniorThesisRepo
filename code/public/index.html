@@ -53,28 +53,40 @@
 </body>
 
 <script>
+    const balls = [1,2,3,4,5]
     // var gameId;
     document.addEventListener('DOMContentLoaded', async (event) => {
         try {
-            const response = await fetch('/allcards');
-            if(response.ok) {
-                const allCards = await response.json();
-                // loadAllCards(allCards);
-            } else {
-                console.error('Error fetching cards:', response.statusText);
-            }
+            // const response = await fetch('/allcards');
+            // if(response.ok) {
+            //     const allCards = await response.json();
+            //     // loadAllCards(allCards);
+            // } else {
+            //     console.error('Error fetching cards:', response.statusText);
+            // }
 
             const cards = document.querySelectorAll('bingo-card');
             cards.forEach(card => {
                 const squares = card.shadowRoot.querySelectorAll('bingo-square');
                 squares.forEach(square => {
+                    if (square.getAttribute('bingo-number') == 'FREE') {
+                        square.setAttribute('has-been-called', '1');
+                    } else {
+                        let num = parseInt(square.getAttribute('bingo-number'));
+                        if (balls.includes(num)) {
+                            square.setAttribute('has-been-called', '1');
+                        } 
+                    }
                     const idString = `bingo-square-${square.getAttribute('bingo-number')}`
                     square.shadowRoot.getElementById(idString).addEventListener('click', () => {
-                        if (square.getAttribute('has-been-called') == '1') {
+                        if (square.getAttribute('has-been-called') === '1') {
                             // square.setAttribute('has-been-called', '1');
+                            console.log(square.getAttribute('has-been-called'));
+                            square.setAttribute('has-been-clicked', '1');
                         } else {
                             // console.log('Button clicked!');
                             console.log(square.getAttribute('has-been-called'));
+                            // square.setAttribute('has-been-called', '1');
                         }
 
                     });
@@ -186,22 +198,22 @@
             // }
 
             // console.log("test")
-            const balls = [1,2,3,4,5]
+            
 
-            const cards = document.querySelectorAll('bingo-card');
-            cards.forEach(card => {
-                const squares = card.shadowRoot.querySelectorAll('bingo-square');
-                squares.forEach(square => {
-                    if (square.getAttribute('bingo-number') == 'FREE') {
-                        square.setAttribute('has-been-called', '1');
-                    } else {
-                        let num = parseInt(square.getAttribute('bingo-number'));
-                        if (balls.includes(num)) {
-                            square.setAttribute('has-been-called', '1');
-                        } 
-                    }
-                });
-            });
+            // const cards = document.querySelectorAll('bingo-card');
+            // cards.forEach(card => {
+            //     const squares = card.shadowRoot.querySelectorAll('bingo-square');
+            //     squares.forEach(square => {
+            //         if (square.getAttribute('bingo-number') == 'FREE') {
+            //             square.setAttribute('has-been-called', '1');
+            //         } else {
+            //             let num = parseInt(square.getAttribute('bingo-number'));
+            //             if (balls.includes(num)) {
+            //                 square.setAttribute('has-been-called', '1');
+            //             } 
+            //         }
+            //     });
+            // });
         } catch (err) { 
             console.log(`Error: ${err}`); 
         }
