@@ -56,7 +56,7 @@
     <hr />
 
 
-    <button id="demo1" class="button">Demo 1</button> 
+    <button id="demo1" class="button">Random Ball</button>
     
     <hr />
 
@@ -67,7 +67,9 @@
 </body>
 
 <script>
-    const balls = [1,2,3,4,5,29,40,56,73];
+    // const balls = [1,2,3,4,5,29,40,56,73];
+    const balls = [];
+
     // var gameId;
     document.addEventListener('DOMContentLoaded', async (event) => {
         refreshListeners(); 
@@ -122,63 +124,22 @@
     document.getElementById("demo1").addEventListener("click", async (e) => {
         e.preventDefault(); 
         try {
- 
-            // const ballNum = document.getElementById('ballNum').value
-
-            // const ballquery = { 
-            //     ballNum
-            // }; 
-
-            // const fetchConfigData = { 
-            //     method: "POST", 
-            //     body: JSON.stringify(ballquery),  
-            //     headers: { 
-            //         "Content-Type": "application/json" 
-            //     } 
-            // }; 
- 
-            // const response = await fetch("/allcalledballs", fetchConfigData); 
-            // if(response.ok) { 
-            //     const balls = await response.json();
-
-            //     const cards = document.querySelectorAll('bingo-card');
-            //     cards.forEach(card => {
-            //         const squares = card.shadowRoot.querySelectorAll('bingo-square');
-            //         squares.forEach(square => {
-            //             if (square.getAttribute('bingo-number') == 'FREE') {
-            //                 square.setAttribute('has-been-called', '1');
-            //             } else {
-            //                 let num = parseInt(square.getAttribute('bingo-number'));
-            //                 if (balls.includes(num)) {
-            //                     square.setAttribute('has-been-called', '1');
-            //                 } 
-            //             }
-            //         });
-            //     });
-
-            //     document.getElementById('ballNum').value = '';
-                
-            // } else { 
-            //     console.log("Error with the response data"); 
-            // }
-
-            // console.log("test")
+            const ballsNotCalled = []; 
+            for (let i = 1; i <= 75; i++) {
+                if (!balls.includes(i)) {
+                    ballsNotCalled.push(i);
+                }
             
-
-            // const cards = document.querySelectorAll('bingo-card');
-            // cards.forEach(card => {
-            //     const squares = card.shadowRoot.querySelectorAll('bingo-square');
-            //     squares.forEach(square => {
-            //         if (square.getAttribute('bingo-number') == 'FREE') {
-            //             square.setAttribute('has-been-called', '1');
-            //         } else {
-            //             let num = parseInt(square.getAttribute('bingo-number'));
-            //             if (balls.includes(num)) {
-            //                 square.setAttribute('has-been-called', '1');
-            //             } 
-            //         }
-            //     });
-            // });
+            }
+            if (ballsNotCalled.length > 0) {
+                const randomBallIndex = Math.floor(Math.random() * ballsNotCalled.length);
+                console.log(ballsNotCalled[randomBallIndex]);
+                balls.push(ballsNotCalled[randomBallIndex]);
+                    
+                refreshListeners();
+            }
+            
+            
         } catch (err) { 
             console.log(`Error: ${err}`); 
         }
