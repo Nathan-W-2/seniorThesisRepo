@@ -46,6 +46,16 @@ class BingoCard extends HTMLElement {
         .card-letters {
             text-align: center;
         }
+        td {
+          padding: 3px;
+        }
+        th {
+          font-family: "Sriracha", cursive;
+          font-optical-sizing: auto;
+          font-weight: <weight>;
+          font-style: normal;
+          font-size: 30px; 
+        }
       </style>
       <table>
           <thead>

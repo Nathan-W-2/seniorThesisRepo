@@ -31,10 +31,12 @@ class BingoSquare extends HTMLElement {
 
       // const color = this.hasBeenCalled ? 'red' : 'white';
       const color = this.hasBeenClicked ? 'red' : 'white';
+      const fontSize = (this.getAttribute('bingo-number') === "FREE") ? "18px" : "25px";
   
       this.shadowRoot.innerHTML = `
         <style>
           .container {
+          
               width: 50px;
               height: 50px;
               display: flex;
@@ -45,6 +47,12 @@ class BingoSquare extends HTMLElement {
               border: 2px solid rgb(0, 0, 0);
           }
           .bingo-square-button {
+              font-family: "Sofia Sans", sans-serif;
+              font-optical-sizing: auto;
+              font-weight: <weight>;
+              font-style: normal;
+              font-size: 20px; 
+
               width: 50px;
               height: 50px;
               display: flex;
@@ -53,6 +61,7 @@ class BingoSquare extends HTMLElement {
               background-color: ${color};
               border-radius: 5px;
               border: 2px solid rgb(0, 0, 0);
+              font-size: ${fontSize};
           }
         </style>
         <button id="bingo-square-${number}" class="bingo-square-button"> 

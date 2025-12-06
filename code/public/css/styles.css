@@ -1,3 +1,7 @@
+body{
+    background-color: #fff5d7;
+}
+
 .cs-legend-footer { 
     text-align: center;  
     font-size: 10px 
@@ -23,4 +27,11 @@
         background-color: #0b5ed7;
         border-color: #0a58ca;
     }
+}
+
+.title {
+    font-family: "IBM Plex Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-size: 20px; 
 }
