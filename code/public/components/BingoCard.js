@@ -30,7 +30,9 @@ class BingoCard extends HTMLElement {
           <td>
             <bingo-square class="test"
               bingo-number="${ballNumArr[i*5 + j]}" 
-              has-been-called="0">
+              has-been-called="0"
+              has-been-clicked="0"
+              has-been-a-while="0">
             </bingo-square>
           </td>
           `
@@ -41,7 +43,7 @@ class BingoCard extends HTMLElement {
       this.shadowRoot.innerHTML = `
       <style>
         :host {
-          padding: 20px; /* Adds 20px padding on all sides */
+          padding: 20px;
         }
         .card-letters {
             text-align: center;
