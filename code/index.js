@@ -3,17 +3,83 @@
 const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+const session = require('express-session');
+const bcrypt = require('bcrypt');
 
 const DBAbstraction = require('./DBAbstraction');
 const db = new DBAbstraction('./data/bingo.sqlite');
 
 const app = express();
 
+app.use(session({
+    secret: 'Bingo-App',
+    resave: false,
+    saveUninitialized: true
+}));
+
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use(express.static('public'));
+
+const requiresLogin = (req, res, next) => {
+    if (req.session.user) {
+        next();
+    } else {
+        res.status(401).send("You must be logged in to access this page.");
+    }
+};
+
+app.get('/admin', requiresLogin, (req, res) => {
+  res.sendFile(__dirname + '/public/admin.html');
+});
+
+app.get('/login', (req, res) => {
+  res.sendFile(__dirname + '/public/login.html');
+});
+
+app.post('/register', async (req, res) => {
+    const { username, password } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    try {
+        await db.registerUser(username, hashedPassword);
+        req.session.user = username;
+        res.json({username});
+    } catch (err) {
+        res.status(500).send("Username might already exist.");
+    }
+});
+
+app.post('/login', async (req, res) => {
+    const { username, password } = req.body;
+    const user = await db.getUserByUsername(username);
+    if (user && await bcrypt.compare(password, user.HashedPassword)) {
+        req.session.user = username;
+        res.json({username});
+    } else {
+        res.status(401).send("Invalid credentials.");
+    }
+});
+
+app.post('/logout', (req, res) => {
+    req.session.destroy(() => {
+        res.status(200).send("Logout successful.");
+    });
+});
+
+app.get('/am-i-loggedin', async (req, res) => {
+    const loginStatus = {
+        loggedIn: false,
+        username: ''
+    }
+    if (req.session.user) {
+        loginStatus.loggedIn = true;
+        loginStatus.username = req.session.user;
+    } 
+    res.json(loginStatus);
+});
+
 
 app.get('/ballscalled', async (req, res) => {
     const balls = await db.getBallsCalledByGame(1);

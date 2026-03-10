@@ -37,7 +37,7 @@ class BingoSquare extends HTMLElement {
 
       // const color = this.hasBeenCalled ? 'red' : 'white';
       const color = this.hasBeenClicked ? 'red' : 'white';
-      const fontSize = (this.getAttribute('bingo-number') === "FREE") ? "18px" : "25px";
+      const fontSize = (this.getAttribute('bingo-number') === "FREE") ? "20px" : "25px";
       // console.log(this.hasBeenAWhile)
       const animation1 = (this.hasBeenAWhile && !this.hasBeenClicked) ? `animation: blinker 1s step-end infinite;` : `foo`;
       const animation2 = (this.hasBeenAWhile && !this.hasBeenClicked) ? `

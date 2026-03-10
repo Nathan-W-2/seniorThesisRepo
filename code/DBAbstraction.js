@@ -25,6 +25,12 @@ class DBAbstraction {
 
     createTables() {
         const sql = ` 
+            CREATE TABLE IF NOT EXISTS 'Users' (
+                'Id' INTEGER PRIMARY KEY,
+                'Username' TEXT UNIQUE,
+                'HashedPassword' TEXT,
+                'Authorized' INTEGER
+            );
             CREATE TABLE IF NOT EXISTS 'Cards' (  
                 'Id' INTEGER,  
                 'PlayerCard' TEXT,  
@@ -53,6 +59,26 @@ class DBAbstraction {
                 } else {
                     resolve();
                 }
+            });
+        });
+    }
+
+    registerUser(username, hashedPassword) {
+        const sql = 'INSERT INTO Users (Username, HashedPassword) VALUES (?, ?)';
+        return new Promise((resolve, reject) => {
+            this.db.run(sql, [username, hashedPassword], (err) => {
+                if (err) reject(err);
+                else resolve();
+            });
+        });
+    }
+
+    getUserByUsername(username) {
+        const sql = 'SELECT Username, HashedPassword FROM Users WHERE Username = ?';
+        return new Promise((resolve, reject) => {
+            this.db.get(sql, [username], (err, row) => {
+                if (err) reject(err);
+                else resolve(row);
             });
         });
     }

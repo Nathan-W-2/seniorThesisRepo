@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" 
+        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Sofia+Sans:ital,wght@0,1..1000;1,1..1000&family=Sriracha&display=swap" rel="stylesheet">
+
+    <script src="/components/BingoSquare.js" type="module"></script>
+    <script src="/components/BingoCard.js" type="module"></script>
+    <script src="/components/BingoForm.js" type="module"></script>
+    <script src="/components/BingoBall.js" type="module"></script>
+    
+
+    <title>Bingo</title>
+</head>
+
+<body>
+    <!-- bootstrap container -->
+    <div id="allContainer" class="container w-100 d-flex justify-content-around ">
+        <div id="cardContainer" class="d-flex flex-wrap">
+            <bingo-card
+            bingo-card-nums="3 28 31 52 72 4 29 40 54 65 14 30 FREE 51 64 12 18 45 56 71 5 26 44 50 73">
+    
+            </bingo-card>
+            <!-- 3 28 31 52 72 4 29 40 54 65 14 30 FREE 51 64 12 18 45 56 71 5 26 44 50 73 -->
+            <!-- 11 18 35 55 66 6 17 43 53 74 10 20 FREE 48 67 14 26 38 56 65 9 25 40 59 70 -->
+            <!-- 4 23 34 59 69 7 16 45 60 62 12 29 FREE 49 66 5 26 42 53 70 1 17 31 55 64 -->
+            <!-- 15 16 35 59 67 8 27 39 51 68 2 23 FREE 53 74 5 30 41 48 66 9 19 40 47 64 -->
+            <!-- 7 28 44 46 75 5 17 32 55 64 3 30 FREE 59 70 13 23 37 48 66 8 16 31 52 73 -->
+            <!-- 1 25 32 56 73 12 21 41 49 72 4 16 FREE 59 62 3 24 38 46 69 10 28 39 51 61 -->
+        </div>
+        <div id="ballContainerOuter" class="d-flex flex-column justify-content-center container gap-2" >
+            <div id="ballContainerTitle" class="fw-bold title container w-100">Balls Called:</div>
+            <div id="ballContainerInner" class="container d-flex flex-wrap align-items-start">
+                <!-- 3 28 31 52 72 4 29 40 54 65 14 30 FREE 51 64 12 18 45 56 71 5 26 44 50 73 -->
+                <!-- 11 18 35 55 66 6 17 43 53 74 10 20 FREE 48 67 14 26 38 56 65 9 25 40 59 70 -->
+                <!-- 4 23 34 59 69 7 16 45 60 62 12 29 FREE 49 66 5 26 42 53 70 1 17 31 55 64 -->
+                <!-- 15 16 35 59 67 8 27 39 51 68 2 23 FREE 53 74 5 30 41 48 66 9 19 40 47 64 -->
+                <!-- 7 28 44 46 75 5 17 32 55 64 3 30 FREE 59 70 13 23 37 48 66 8 16 31 52 73 -->
+                <!-- 1 25 32 56 73 12 21 41 49 72 4 16 FREE 59 62 3 24 38 46 69 10 28 39 51 61 -->
+            </div>
+        </div>
+        
+    </div>
+
+    <hr />
+
+
+    <button id="demo1" class="button">Random Ball</button>
+    
+    <hr />
+
+    <!-- <bingo-form></bingo-form> -->
+
+    <hr />
+
+</body>
+
+<script>
+    // const balls = [1,2,3,4,5,29,40,56,73];
+    const balls = [];
+    // var gameId;
+    document.addEventListener('DOMContentLoaded', async (event) => {
+        refreshListeners(); 
+    });
+
+    // document.getElementById("ballCallButton").addEventListener("click", async (e) => {
+    //     e.preventDefault(); 
+    //     try {
+ 
+    //         const ballNum = document.getElementById('ballNum').value
+
+    //         const ballquery = { 
+    //             ballNum
+    //         }; 
+
+    //         const fetchConfigData = { 
+    //             method: "POST", 
+    //             body: JSON.stringify(ballquery),  
+    //             headers: { 
+    //                 "Content-Type": "application/json" 
+    //             } 
+    //         }; 
+ 
+    //         const response = await fetch("/allcalledballs", fetchConfigData); 
+    //         if(response.ok) { 
+    //             const balls = await response.json();
+
+    //             const cards = document.querySelectorAll('bingo-card');
+    //             cards.forEach(card => {
+    //                 const squares = card.shadowRoot.querySelectorAll('bingo-square');
+    //                 squares.forEach(square => {
+    //                     if (square.getAttribute('bingo-number') == 'FREE') {
+    //                         square.setAttribute('has-been-called', '1');
+    //                     } else {
+    //                         let num = parseInt(square.getAttribute('bingo-number'));
+    //                         if (balls.includes(num)) {
+    //                             square.setAttribute('has-been-called', '1');
+    //                         } 
+    //                     }
+    //                 });
+    //             });
+
+    //             document.getElementById('ballNum').value = '';
+                
+    //         } else { 
+    //             console.log("Error with the response data"); 
+    //         }
+    //     } catch (err) { 
+    //         console.log(`Error: ${err}`); 
+    //     }
+    // });
+    document.getElementById("demo1").addEventListener("click", async (e) => {
+        e.preventDefault(); 
+        try {
+            const ballsNotCalled = []; 
+            for (let i = 1; i <= 75; i++) {
+                if (!balls.includes(i)) {
+                    ballsNotCalled.push(i);
+                }
+            
+            }
+            if (ballsNotCalled.length > 0) {
+                const randomBallIndex = Math.floor(Math.random() * ballsNotCalled.length);
+                // console.log(ballsNotCalled[randomBallIndex]);
+                balls.unshift(ballsNotCalled[randomBallIndex]);
+                    
+                refreshListeners();
+            }
+            
+            
+        } catch (err) { 
+            console.log(`Error: ${err}`); 
+        }
+    });
+
+    // document.addEventListener('add-new-card', async (event) => {
+    //     try {
+    //         const newCard = event.detail;
+
+    //         const response = await fetch('/allcards', {
+    //             method: 'POST',
+    //             body: JSON.stringify(newCard),
+    //             headers: { 'Content-Type': 'application/json' }
+    //         });
+
+    //         if (response.ok) {
+    //             const allCards = await response.json();
+    //             // loadAllCards(allCards);
+    //         } else {
+    //             console.log('Error with the response data');
+    //         }
+    //     } catch (err) {
+    //         console.log(`Error: ${err}`);
+    //     }
+    // });
+    
+    // document.addEventListener('clear-all-cards', async (event) => {
+    //     try {
+    //         const Id = event.detail;
+
+    //         const fetchConfigData = { 
+    //             method: "POST", 
+    //             body: JSON.stringify(Id),  
+    //             headers: { 
+    //                 "Content-Type": "application/json" 
+    //             } 
+    //         }; 
+
+    //         const response = await fetch("/deletecards", fetchConfigData); 
+    //             if(response.ok) { 
+    //             // loadAllCards([]);
+    //         } else { 
+    //             console.log("Error with the response data"); 
+    //         }
+    //     } catch (err) { 
+    //     console.log(`Error: ${err}`); 
+    //     }
+    // });
+
+    function loadAllCards(cards) { 
+        const table = document.getElementById("cardContainer"); 
+ 
+        table.innerHTML = ""; 
+ 
+        cards.forEach(card => { 
+            const cardElement = document.createElement("bingo-card"); 
+            cardElement.setAttribute('bingo-card-nums', card.PlayerCard);
+            table.appendChild(cardElement); 
+        }); 
+    }
+
+    function loadAllBalls(balls) { 
+        const table = document.getElementById("ballContainerInner"); 
+ 
+        table.innerHTML = ""; 
+ 
+        balls.forEach(ball => { 
+            const ballElement = document.createElement("bingo-ball"); 
+            ballElement.setAttribute('bingo-number', ball);
+            table.appendChild(ballElement); 
+        }); 
+    }
+
+    function refreshListeners() {
+        try {
+            loadAllBalls(balls)
+
+            const cards = document.querySelectorAll('bingo-card');
+            cards.forEach(card => {
+                const squares = card.shadowRoot.querySelectorAll('bingo-square');
+                squares.forEach(square => {
+                    if (square.getAttribute('bingo-number') == 'FREE') {
+                        square.setAttribute('has-been-called', '1');
+                    } else {
+                        let num = parseInt(square.getAttribute('bingo-number'));
+                        if (balls.includes(num)) {
+                            square.setAttribute('has-been-called', '1');
+                        } 
+                        var oldBalls = []; 
+                        if (balls.length > 5) {
+                            oldBalls = balls.slice(5);
+                            // console.log(oldBalls)
+                        } 
+                        if (oldBalls.includes(num)) {
+                            console.log(num);
+                            square.setAttribute('has-been-a-while', '1');
+                        } 
+                    }
+
+
+                    const idString = `bingo-square-${square.getAttribute('bingo-number')}`
+                    square.shadowRoot.getElementById(idString).addEventListener('click', () => {
+                        if (square.getAttribute('has-been-called') === '1') {
+                            // square.setAttribute('has-been-called', '1');
+                            // console.log(square.getAttribute('has-been-called'));
+                            square.setAttribute('has-been-clicked', '1');
+                            square.setAttribute('has-a-while', '0'); 
+                        } else {
+                            // console.log('Button clicked!');
+                            // console.log(square.getAttribute('has-been-called'));
+                            // square.setAttribute('has-been-called', '1');
+                        }
+
+                    });
+                    
+                });
+            });
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+</script>
+
+</html>
