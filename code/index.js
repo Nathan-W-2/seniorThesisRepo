@@ -39,6 +39,10 @@ app.get('/login', (req, res) => {
   res.sendFile(__dirname + '/public/login.html');
 });
 
+app.get('/logged-in', (req, res) => {
+  res.sendFile(__dirname + '/public/logged-in.html');
+});
+
 app.post('/register', async (req, res) => {
     const { username, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);

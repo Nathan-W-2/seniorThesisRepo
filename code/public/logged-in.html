@@ -15,7 +15,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Sofia+Sans:ital,wght@0,1..1000;1,1..1000&family=Sriracha&display=swap" rel="stylesheet"> -->
 
-    <script src="/components/AuthBoxLogin.js" type="module"></script>
+    <script src="/components/AuthBoxLogout.js" type="module"></script>
     <!-- <script src="/components/BingoCard.js" type="module"></script>
     <script src="/components/BingoForm.js" type="module"></script>
     <script src="/components/BingoBall.js" type="module"></script> -->
@@ -26,7 +26,7 @@
 
 <body>
    <div class="container">
-        <auth-box-login> </auth-box-login>
+        <auth-box-logout> </auth-box-logout>
     </div>
 </body>
 
@@ -37,10 +37,11 @@
                 if(response2.ok) {
                     const loginStatus = await response2.json();
                     if(loginStatus.loggedIn) {
-                        window.location.href= "/logged-in";
-                        // const authBox = document.querySelector('auth-box');
-                        // authBox.setAttribute('username', loginStatus.username);
-                    } 
+                        const authBox = document.querySelector('auth-box-logout');
+                        authBox.setAttribute('username', loginStatus.username);
+                    } else {
+                        window.location.href = "/login";
+                    }
                 } else {
                     console.error('Error checking login:', response2.statusText);
                 }
@@ -88,7 +89,7 @@
                     // const legendTable = document.querySelector('csl-legend-table');
                     // legendTable.setAttribute('user-logged-in', false);
 
-                    const authBox = document.querySelector('csl-auth-box');
+                    const authBox = document.querySelector('auth-box-logout');
                     authBox.setAttribute('username', '');
                 } else {
                     console.log('Error with the logout response data');
