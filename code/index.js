@@ -5,11 +5,40 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const bcrypt = require('bcrypt');
+const http = require('http');         // needed for websockets
+const WebSocket = require('ws');      // needed for websockets
 
 const DBAbstraction = require('./DBAbstraction');
 const db = new DBAbstraction('./data/bingo.sqlite');
 
 const app = express();
+const server = http.createServer(app);        // needed for websockets
+const wss = new WebSocket.Server({ server }); // needed for websockets
+
+
+// websocket 
+wss.on('connection', (socket) => {
+    // console.log('Client connected via WebSocket');
+
+    socket.on('message', (data) => {
+        const message = JSON.parse(data);
+        console.log('Received:', message);
+    });
+
+    socket.on('close', () => {
+        console.log('Client disconnected');
+    });
+});
+
+
+// helper function to broadcast to all connected clients
+const broadcast = (data) => {
+    wss.clients.forEach((client) => {
+        if (client.readyState === WebSocket.OPEN) {
+            client.send(JSON.stringify(data));
+        }
+    });
+};
 
 app.use(session({
     secret: 'Bingo-App',
@@ -94,6 +123,16 @@ app.get('/ballscalled', async (req, res) => {
     res.json(numsOnly);
 });
 
+app.post('/deleteballs', async (req, res) => {
+    const gameId = req.body.gameId;
+
+    await db.deleteBallsCalledByGame(gameId);
+
+    broadcast({ type: 'ballsReset' });
+
+    res.json({});
+});
+
 app.post('/deletecards', async (req, res) => {
     const gameId = req.body.gameId;
 
@@ -120,6 +159,9 @@ app.post('/allcalledballs', async (req, res) => {
     await db.insertBallCalled(ballCalled, 1);
     const allBalls = await db.getBallsCalledByGame(1);
     const allBallNums = allBalls.map(ball => ball['BallNum']);
+
+    broadcast({ type: 'ballCalled', balls: allBallNums });
+    // console.log("broadcasted")
     res.json(allBallNums);
 });
 
@@ -129,7 +171,7 @@ app.use((req, res) => {
 
 db.init()
     .then(() => {
-        app.listen(53141, () => console.log('The server is up and running...'));
+        server.listen(53141, () => console.log('The server is up and running...'));
     })
     .catch(err => {
         console.log('Problem setting up the database');

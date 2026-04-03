@@ -53,16 +53,16 @@
         
     </div>
 
-    <hr />
+    <!-- <hr /> -->
 
 
-    <button id="demo1" class="button">Random Ball</button>
+    <!-- <button id="demo1" class="button">Random Ball</button> -->
     
-    <hr />
+    <!-- <hr /> -->
 
     <!-- <bingo-form></bingo-form> -->
 
-    <hr />
+    <!-- <hr /> -->
 
 </body>
 
@@ -71,8 +71,34 @@
     const balls = [];
     // var gameId;
     document.addEventListener('DOMContentLoaded', async (event) => {
+        const response = await fetch("/ballscalled"); 
+        if(response.ok) { 
+            const ballNums = await response.json();
+            balls.push(...ballNums)
+        }
         refreshListeners(); 
     });
+
+    //websocket
+    const socket = new WebSocket('ws://localhost:53141');
+
+    socket.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+
+        if (data.type === 'ballCalled') {
+            // console.log('New ball called. All balls:', data.balls);
+            //clear balls array
+            balls.length = 0; 
+            //repopulate array
+            balls.push(...data.balls); 
+            refreshListeners(); 
+        }
+
+        if (data.type === 'gameReset') {
+            // console.log('Balls have been reset');
+            refreshListeners();
+        }
+    };
 
     // document.getElementById("ballCallButton").addEventListener("click", async (e) => {
     //     e.preventDefault(); 
@@ -120,29 +146,29 @@
     //         console.log(`Error: ${err}`); 
     //     }
     // });
-    document.getElementById("demo1").addEventListener("click", async (e) => {
-        e.preventDefault(); 
-        try {
-            const ballsNotCalled = []; 
-            for (let i = 1; i <= 75; i++) {
-                if (!balls.includes(i)) {
-                    ballsNotCalled.push(i);
-                }
+    // document.getElementById("demo1").addEventListener("click", async (e) => {
+    //     e.preventDefault(); 
+    //     try {
+    //         const ballsNotCalled = []; 
+    //         for (let i = 1; i <= 75; i++) {
+    //             if (!balls.includes(i)) {
+    //                 ballsNotCalled.push(i);
+    //             }
             
-            }
-            if (ballsNotCalled.length > 0) {
-                const randomBallIndex = Math.floor(Math.random() * ballsNotCalled.length);
-                // console.log(ballsNotCalled[randomBallIndex]);
-                balls.unshift(ballsNotCalled[randomBallIndex]);
+    //         }
+    //         if (ballsNotCalled.length > 0) {
+    //             const randomBallIndex = Math.floor(Math.random() * ballsNotCalled.length);
+    //             // console.log(ballsNotCalled[randomBallIndex]);
+    //             balls.unshift(ballsNotCalled[randomBallIndex]);
                     
-                refreshListeners();
-            }
+    //             refreshListeners();
+    //         }
             
             
-        } catch (err) { 
-            console.log(`Error: ${err}`); 
-        }
-    });
+    //     } catch (err) { 
+    //         console.log(`Error: ${err}`); 
+    //     }
+    // });
 
     // document.addEventListener('add-new-card', async (event) => {
     //     try {

@@ -28,10 +28,10 @@
     <!-- bootstrap container -->
     <div id="allContainer" class="container w-100 d-flex justify-content-around ">
         <div id="cardContainer" class="d-flex flex-wrap">
-            <bingo-card
+            <!-- <bingo-card
             bingo-card-nums="3 28 31 52 72 4 29 40 54 65 14 30 FREE 51 64 12 18 45 56 71 5 26 44 50 73">
     
-            </bingo-card>
+            </bingo-card> -->
             <!-- 3 28 31 52 72 4 29 40 54 65 14 30 FREE 51 64 12 18 45 56 71 5 26 44 50 73 -->
             <!-- 11 18 35 55 66 6 17 43 53 74 10 20 FREE 48 67 14 26 38 56 65 9 25 40 59 70 -->
             <!-- 4 23 34 59 69 7 16 45 60 62 12 29 FREE 49 66 5 26 42 53 70 1 17 31 55 64 -->
@@ -56,8 +56,8 @@
     <hr />
 
 
-    <button id="demo1" class="button">Random Ball</button>
-    
+    <button id="callBallButton" class="button">Random Ball</button>
+    <button id="clearBallsButton" class="button">Clear Balls</button>
     <hr />
 
     <!-- <bingo-form></bingo-form> -->
@@ -71,6 +71,11 @@
     const balls = [];
     // var gameId;
     document.addEventListener('DOMContentLoaded', async (event) => {
+        const response = await fetch("/ballscalled"); 
+        if(response.ok) { 
+            const ballNums = await response.json();
+            balls.push(...ballNums)
+        }
         refreshListeners(); 
     });
 
@@ -120,7 +125,7 @@
     //         console.log(`Error: ${err}`); 
     //     }
     // });
-    document.getElementById("demo1").addEventListener("click", async (e) => {
+    document.getElementById("callBallButton").addEventListener("click", async (e) => {
         e.preventDefault(); 
         try {
             const ballsNotCalled = []; 
@@ -134,9 +139,64 @@
                 const randomBallIndex = Math.floor(Math.random() * ballsNotCalled.length);
                 // console.log(ballsNotCalled[randomBallIndex]);
                 balls.unshift(ballsNotCalled[randomBallIndex]);
-                    
+                
+                const ballNum = ballsNotCalled[randomBallIndex];
+
+                const ballquery = { 
+                    ballNum
+                }; 
+
+                const fetchConfigData = { 
+                    method: "POST", 
+                    body: JSON.stringify(ballquery),  
+                    headers: { 
+                        "Content-Type": "application/json" 
+                    } 
+                }; 
+    
+                const response = await fetch("/allcalledballs", fetchConfigData); 
+                if(response.ok) { 
+                    //success
+                } else { 
+                    console.log("Error with the response data"); 
+                }
+
                 refreshListeners();
             }
+            
+            
+        } catch (err) { 
+            console.log(`Error: ${err}`); 
+        }
+    });
+
+    document.getElementById("clearBallsButton").addEventListener("click", async (e) => {
+        e.preventDefault(); 
+        try {
+            
+            const gameId = 1; //only while supporting one game
+
+            const ballquery = { 
+                gameId
+            }; 
+
+            const fetchConfigData = { 
+                method: "POST", 
+                body: JSON.stringify(ballquery),  
+                headers: { 
+                    "Content-Type": "application/json" 
+                } 
+            }; 
+
+            const response = await fetch("/deleteballs", fetchConfigData); 
+            if(response.ok) { 
+                //success
+            } else { 
+                console.log("Error with the response data"); 
+            }
+
+            balls.length = 0; //clear balls array
+            refreshListeners();
             
             
         } catch (err) { 
@@ -204,7 +264,7 @@
         const table = document.getElementById("ballContainerInner"); 
  
         table.innerHTML = ""; 
- 
+        console.log(balls.length);
         balls.forEach(ball => { 
             const ballElement = document.createElement("bingo-ball"); 
             ballElement.setAttribute('bingo-number', ball);
@@ -223,7 +283,7 @@
                     if (square.getAttribute('bingo-number') == 'FREE') {
                         square.setAttribute('has-been-called', '1');
                     } else {
-                        let num = parseInt(square.getAttribute('bingo-number'));
+                        const num = parseInt(square.getAttribute('bingo-number'));
                         if (balls.includes(num)) {
                             square.setAttribute('has-been-called', '1');
                         } 
