@@ -94,8 +94,10 @@
             refreshListeners(); 
         }
 
-        if (data.type === 'gameReset') {
+        if (data.type === 'ballsReset') {
             // console.log('Balls have been reset');
+            balls.length = 0; 
+            // loadAllCards(); 
             refreshListeners();
         }
     };
@@ -230,7 +232,7 @@
         const table = document.getElementById("ballContainerInner"); 
  
         table.innerHTML = ""; 
- 
+        // console.log(balls.length);
         balls.forEach(ball => { 
             const ballElement = document.createElement("bingo-ball"); 
             ballElement.setAttribute('bingo-number', ball);
@@ -259,7 +261,7 @@
                             // console.log(oldBalls)
                         } 
                         if (oldBalls.includes(num)) {
-                            console.log(num);
+                            // console.log(num);
                             square.setAttribute('has-been-a-while', '1');
                         } 
                     }
