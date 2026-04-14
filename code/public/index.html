@@ -28,10 +28,10 @@
     <!-- bootstrap container -->
     <div id="allContainer" class="container w-100 d-flex justify-content-around ">
         <div id="cardContainer" class="d-flex flex-wrap">
-            <bingo-card
+            <!-- <bingo-card
             bingo-card-nums="3 28 31 52 72 4 29 40 54 65 14 30 FREE 51 64 12 18 45 56 71 5 26 44 50 73">
     
-            </bingo-card>
+            </bingo-card> -->
             <!-- 3 28 31 52 72 4 29 40 54 65 14 30 FREE 51 64 12 18 45 56 71 5 26 44 50 73 -->
             <!-- 11 18 35 55 66 6 17 43 53 74 10 20 FREE 48 67 14 26 38 56 65 9 25 40 59 70 -->
             <!-- 4 23 34 59 69 7 16 45 60 62 12 29 FREE 49 66 5 26 42 53 70 1 17 31 55 64 -->
@@ -69,14 +69,66 @@
 <script>
     // const balls = [1,2,3,4,5,29,40,56,73];
     const balls = [];
-    // var gameId;
+    var playerId;
     document.addEventListener('DOMContentLoaded', async (event) => {
-        const response = await fetch("/ballscalled"); 
-        if(response.ok) { 
-            const ballNums = await response.json();
+        const ballResponse = await fetch("/ballscalled"); 
+        if(ballResponse.ok) { 
+            const ballNums = await ballResponse.json();
             balls.push(...ballNums)
         }
-        refreshListeners(); 
+        
+        const playerResponse = await fetch('/is-player');
+        if(!playerResponse.ok) {
+            console.error('Error checking player status:', playerResponse.statusText);
+        } else {
+            const playerStatus = await playerResponse.json();
+            if(playerStatus.isPlayer) {
+                playerId = playerStatus.playerId; 
+                // console.log(playerId)
+            } else {
+                const fetchPlayerData = { 
+                    method: "POST", 
+                }; 
+                
+                const newPlayerResponse = await fetch("/newplayer", fetchPlayerData); 
+                if(newPlayerResponse.ok) { 
+                    const playerStatus = await newPlayerResponse.json();
+                    playerId = playerStatus.playerId;
+                    // console.log(playerId)
+                    // playerId = 1;
+                } 
+                else {
+                    console.log("Error creating player"); 
+                }
+
+                const cardQuery = { 
+                    playerId
+                }; 
+                // console.log(cardQuery)
+                
+                const fetchCardData = { 
+                    method: "POST", 
+                    body: JSON.stringify(cardQuery),  
+                    headers: { 
+                        "Content-Type": "application/json" 
+                    } 
+                }; 
+                
+                const newCardResponse = await fetch("/insertcard", fetchCardData); 
+                if(newCardResponse.ok) { 
+                    //success
+                } 
+                else {
+                    console.log("Error inserting card"); 
+                }
+            }
+        }
+        
+        // console.log(playerId);
+        (async() => {
+                await loadAllCards(); 
+                refreshListeners(); 
+            })()
     });
 
     //websocket
@@ -95,10 +147,12 @@
         }
 
         if (data.type === 'ballsReset') {
-            // console.log('Balls have been reset');
+            console.log('Balls have been reset');
             balls.length = 0; 
-            // loadAllCards(); 
-            refreshListeners();
+            (async() => {
+                await loadAllCards(); 
+                refreshListeners();
+            })()
         }
     };
 
@@ -216,16 +270,34 @@
     //     }
     // });
 
-    function loadAllCards(cards) { 
+    async function loadAllCards() { 
         const table = document.getElementById("cardContainer"); 
+
+        // const cardQuery = { 
+        //     playerId: playerId
+        // }; 
+        
+        // console.log(cardQuery);
+        // const queryString = new URLSearchParams(cardQuery).toString();
+        // console.log(queryString);
+        // console.log(playerId);
+        const cardResponse = await fetch(`/playercards?playerId=${playerId}`); 
+
+        if(cardResponse.ok) { 
+            const cards = await cardResponse.json();
+            table.innerHTML = ""; 
+            console.log(cards)
+            cards.forEach(card => { 
+                const cardElement = document.createElement("bingo-card"); 
+                cardElement.setAttribute('bingo-card-nums', card.PlayerCard);
+                table.appendChild(cardElement); 
+            }); 
+        
+        } else { 
+            console.log("Error with the response data"); 
+        }
  
-        table.innerHTML = ""; 
- 
-        cards.forEach(card => { 
-            const cardElement = document.createElement("bingo-card"); 
-            cardElement.setAttribute('bingo-card-nums', card.PlayerCard);
-            table.appendChild(cardElement); 
-        }); 
+        
     }
 
     function loadAllBalls(balls) { 

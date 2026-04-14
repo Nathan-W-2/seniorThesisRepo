@@ -41,6 +41,41 @@ const broadcast = (data) => {
     });
 };
 
+// helper function to create random bingo cards in the correct format
+function generateBingoCard() {
+    const ranges = [
+        { min: 1,  max: 15 },  // B 
+        { min: 16, max: 30 },  // I 
+        { min: 31, max: 45 },  // N 
+        { min: 46, max: 60 },  // G 
+        { min: 61, max: 75 },  // O 
+    ];
+
+    const columns = ranges.map(({ min, max }) => {
+        const pool = [];
+        for (let i = min; i <= max; i++) {
+            pool.push(i);
+        }
+        // shuffle and pick 5
+        return pool.sort(() => Math.random() - 0.5).slice(0, 5);
+    });
+
+    // build the 5x5 grid row by row
+    const numbers = [];
+    for (let row = 0; row < 5; row++) {
+        for (let col = 0; col < 5; col++) {
+            //account for free space
+            if (row === 2 && col === 2) {
+                numbers.push('FREE');
+            } else {
+                numbers.push(columns[col][row]);
+            }
+        }
+    }
+
+    return numbers.join(' ');
+}
+
 app.use(session({
     secret: 'Bingo-App',
     resave: false,
@@ -148,12 +183,31 @@ app.get('/allcards', async (req, res) => {
     const allCards = await db.getAllCardsByGame(1);
     res.json(allCards);
 }); 
-app.post('/allcards', async (req, res) => { 
-    const bingoCardStr = req.body.bingoCardStr;
-    await db.insertCard(bingoCardStr, 1);
- 
-    const allCards = await db.getAllCardsByGame(1);
+
+// app.post('/allcards', async (req, res) => { 
+//     const bingoCardStr = req.body.bingoCardStr;
+//     // await db.insertCard(bingoCardStr, 1);
+    
+//     const allCards = await db.getAllCardsByGame(1);
+//     res.json(allCards);
+// }); 
+
+app.post('/insertcard', async (req, res) => { 
+    const playerId = req.body.playerId;
+    const cardStr = generateBingoCard(); 
+    // console.log(cardStr);
+    await db.insertCard(playerId,cardStr, 1);
+    
+    const allCards = await db.getCardsByPlayer(playerId);
     res.json(allCards);
+}); 
+
+
+app.get('/playercards', async (req, res) => { 
+    const playerId = req.query.playerId;
+    const cards = await db.getCardsByPlayer(playerId);
+    // console.log(cards)
+    res.json(cards);
 }); 
 
 app.post('/allcalledballs', async (req, res) => {
@@ -165,6 +219,34 @@ app.post('/allcalledballs', async (req, res) => {
     broadcast({ type: 'ballCalled', balls: allBallNums });
     // console.log("broadcasted")
     res.json(allBallNums);
+});
+
+app.post('/newplayer', async (req, res) => {
+    const playerIdReturn = await db.insertPlayer(1); 
+    // console.log(playerId)
+    // console.log(playerId[0].Id)
+    const playerId = playerIdReturn[0].Id
+    req.session.playerId = playerId; 
+
+    const playerInfo = { 
+        playerId
+    }; 
+
+    res.json(playerInfo);
+});
+
+app.get('/is-player', async (req, res) => {
+    const playerStatus = {
+        isPlayer: false,
+        playerId: ''
+    }
+    if (req.session.playerId) {
+        playerStatus.isPlayer = true;
+        playerStatus.playerId = req.session.playerId;
+    } 
+    // console.log(playerStatus.playerId)
+    // console.log(playerStatus.isPlayer)
+    res.json(playerStatus);
 });
 
 app.use((req, res) => {

@@ -31,11 +31,17 @@ class DBAbstraction {
                 'HashedPassword' TEXT,
                 'Authorized' INTEGER
             );
+            CREATE TABLE IF NOT EXISTS 'Players' (
+                'Id' INTEGER PRIMARY KEY,
+                'GameId' INTEGER,
+                FOREIGN KEY("GameId") REFERENCES "Games"("Id")
+            );
             CREATE TABLE IF NOT EXISTS 'Cards' (  
                 'Id' INTEGER,  
                 'PlayerCard' TEXT,  
                 'GameId' INTEGER,
                 FOREIGN KEY("GameId") REFERENCES "Games"("Id"),
+                FOREIGN KEY("PlayerId") REFERENCES "Players"("Id"),
                 PRIMARY KEY('Id') 
             );             
             CREATE TABLE IF NOT EXISTS 'BallsCalled' (  
@@ -100,6 +106,23 @@ class DBAbstraction {
         });
     }
 
+    getCardsByPlayer(PlayerId) {
+        const sql = ` 
+            SELECT PlayerCard
+            FROM Cards
+            WHERE PlayerId = ?
+        `;
+        return new Promise((resolve, reject) => {
+            this.db.all(sql, [PlayerId], (err, rows) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(rows);
+                }
+            });
+        });
+    }
+
     insertGame(Type) {
         const sql = 'INSERT INTO Games (Type) VALUES (?);';
         return new Promise((resolve, reject) => {
@@ -110,10 +133,30 @@ class DBAbstraction {
         });
     }
 
-    insertCard(bingoCardStr, GameId) {
-        const sql = 'INSERT INTO Cards (PlayerCard, GameId) VALUES (?,?) RETURNING GameId;';
+    // insertCard(bingoCardStr, GameId, PlayerId) {
+    //     const sql = 'INSERT INTO Cards (PlayerCard, GameId, PlayerId) VALUES (?,?,?) RETURNING GameId;';
+    //     return new Promise((resolve, reject) => {
+    //         this.db.all(sql, [bingoCardStr, GameId, PlayerId], (err, row) => {
+    //             if (err) reject(err);
+    //             else resolve(row);
+    //         });
+    //     });
+    // }
+
+    insertPlayer(GameId) {
+        const sql = 'INSERT INTO Players (GameId) VALUES (?) RETURNING Id;';
         return new Promise((resolve, reject) => {
-            this.db.all(sql, [bingoCardStr, GameId], (err, row) => {
+            this.db.all(sql, [GameId], (err, row) => {
+                if (err) reject(err);
+                else resolve(row);
+            });
+        });
+    }
+
+    insertCard(PlayerId, BingoCardStr, GameId) {
+        const sql = 'INSERT INTO Cards (PlayerId, PlayerCard, GameId) VALUES (?,?,?);';
+        return new Promise((resolve, reject) => {
+            this.db.all(sql, [PlayerId, BingoCardStr, GameId], (err, row) => {
                 if (err) reject(err);
                 else resolve(row);
             });
