@@ -21,9 +21,12 @@ const wss = new WebSocket.Server({ server }); // needed for websockets
 wss.on('connection', (socket) => {
     // console.log('Client connected via WebSocket');
 
-    socket.on('message', (data) => {
-        const message = JSON.parse(data);
-        console.log('Received:', message);
+    socket.on('message', (event) => {
+        const data = JSON.parse(event);
+        console.log('Received:', data);
+        if (data.type === 'bingo') {
+            broadcast({ type: 'BINGO!' });
+        }
     });
 
     socket.on('close', () => {

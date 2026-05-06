@@ -13,6 +13,18 @@ class BingoSquare extends HTMLElement {
   
     connectedCallback() {
         this.render();
+
+        this.shadowRoot.addEventListener('click', (event) => {
+            if (event.target.classList.contains('bingo-square-button') && this.hasBeenClicked) {
+                const ballNum = event.target.dataset.ballNum;
+
+                this.dispatchEvent(new CustomEvent('squareChecked', {
+                    detail: { ballNum },
+                    bubbles: true,
+                    composed: true 
+                }));
+            }
+        });
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
@@ -39,21 +51,20 @@ class BingoSquare extends HTMLElement {
       const color = this.hasBeenClicked ? 'red' : 'white';
       const fontSize = (this.getAttribute('bingo-number') === "FREE") ? "20px" : "25px";
       // console.log(this.hasBeenAWhile)
-      const animation1 = (this.hasBeenAWhile && !this.hasBeenClicked) ? `animation: blinker 1s step-end infinite;` : `foo`;
+      const animation1 = (this.hasBeenAWhile && !this.hasBeenClicked) ? `animation: blinker 1s step-end infinite;` : ``;
       const animation2 = (this.hasBeenAWhile && !this.hasBeenClicked) ? `
                                                 @keyframes blinker {
                                                       50% {
                                                         border-color: red;
                                                       }
                                                     }
-                                                ` : `foo`;
+                                                ` : ``;
   
       this.shadowRoot.innerHTML = `
         <style>
           .bingo-square-button {
               font-family: "Sofia Sans", sans-serif;
               font-optical-sizing: auto;
-              font-weight: <weight>;
               font-style: normal;
               font-size: 20px; 
 

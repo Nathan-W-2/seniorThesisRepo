@@ -17,7 +17,6 @@
 
     <script src="/components/BingoSquare.js" type="module"></script>
     <script src="/components/BingoCard.js" type="module"></script>
-    <script src="/components/BingoForm.js" type="module"></script>
     <script src="/components/BingoBall.js" type="module"></script>
     
 
@@ -132,17 +131,17 @@
     });
 
     //websocket
-    const socket = new WebSocket('ws://localhost:53141');
+    const socket = new WebSocket('wss://disloyal-unsoiled-backfire.ngrok-free.dev');
 
     socket.onmessage = (event) => {
         const data = JSON.parse(event.data);
-
         if (data.type === 'ballCalled') {
             // console.log('New ball called. All balls:', data.balls);
             //clear balls array
             balls.length = 0; 
             //repopulate array
             balls.push(...data.balls); 
+            balls.reverse(); 
             refreshListeners(); 
         }
 
@@ -155,6 +154,31 @@
             })()
         }
     };
+
+    document.addEventListener('squareChecked', (event) => {
+        // const { ballNum } = event.detail;
+        // console.log(ballNum)
+        const cards = document.querySelectorAll('bingo-card');
+            cards.forEach(card => {
+                const checkedSquares = []
+                const squares = card.shadowRoot.querySelectorAll('bingo-square');
+                squares.forEach(square => {
+                    if (square.getAttribute('has-been-clicked') === '1') {
+                        checkedSquares.push(1); 
+                    } else {
+                        checkedSquares.push(0); 
+                    }
+                });
+                if (isBingo(checkedSquares)) {
+                    socket.send(JSON.stringify({ type: 'bingo' }));
+
+                } 
+                // console.log(checkedSquares); 
+            });
+        
+    });
+
+
 
     // document.getElementById("ballCallButton").addEventListener("click", async (e) => {
     //     e.preventDefault(); 
@@ -286,7 +310,6 @@
         if(cardResponse.ok) { 
             const cards = await cardResponse.json();
             table.innerHTML = ""; 
-            console.log(cards)
             cards.forEach(card => { 
                 const cardElement = document.createElement("bingo-card"); 
                 cardElement.setAttribute('bingo-card-nums', card.PlayerCard);
@@ -359,6 +382,87 @@
         } catch (error) {
             console.error('Error:', error);
         }
+    }
+
+    function isBingo(checkedSquares) {
+        let retVal = false; 
+        if (checkVerticalBingos(checkedSquares) || checkHorizontalBingos(checkedSquares) || checkDiagonalBingos(checkedSquares)) {
+            retVal = true; 
+        }
+        return retVal; 
+    }
+
+    function checkVerticalBingos(checkedSquares) {
+        let retVal = false;
+        //B
+        if (checkedSquares[0] && checkedSquares[5] && checkedSquares[10] && checkedSquares[15] && checkedSquares[20]) {
+            // console.log("Bingo on B")
+            retVal = true; 
+        }
+        //I
+        if (checkedSquares[1] && checkedSquares[6] && checkedSquares[11] && checkedSquares[16] && checkedSquares[21]) {
+            // console.log("Bingo on I")
+            retVal = true; 
+        }
+        //N
+        if (checkedSquares[2] && checkedSquares[7] && checkedSquares[12] && checkedSquares[17] && checkedSquares[22]) {
+            // console.log("Bingo on N")
+            retVal = true; 
+        }
+        //G
+        if (checkedSquares[3] && checkedSquares[8] && checkedSquares[13] && checkedSquares[18] && checkedSquares[23]) {
+            // console.log("Bingo on G")
+            retVal = true; 
+        }
+        //0
+        if (checkedSquares[4] && checkedSquares[9] && checkedSquares[14] && checkedSquares[19] && checkedSquares[24]) {
+            // console.log("Bingo on 0")
+            retVal = true; 
+        }
+        return retVal;
+    }
+    function checkHorizontalBingos(checkedSquares) {
+        let retVal = false;
+        //row 1
+        if (checkedSquares[0] && checkedSquares[1] && checkedSquares[2] && checkedSquares[3] && checkedSquares[4]) {
+            // console.log("Bingo on row 1")
+            retVal = true; 
+        }
+        //row 2
+        if (checkedSquares[5] && checkedSquares[6] && checkedSquares[7] && checkedSquares[8] && checkedSquares[9]) {
+            // console.log("Bingo on row 2")
+            retVal = true; 
+        }
+        //row 3
+        if (checkedSquares[10] && checkedSquares[11] && checkedSquares[12] && checkedSquares[13] && checkedSquares[14]) {
+            // console.log("Bingo on row 3")
+            retVal = true; 
+        }
+        //row 4
+        if (checkedSquares[15] && checkedSquares[16] && checkedSquares[17] && checkedSquares[18] && checkedSquares[19]) {
+            // console.log("Bingo on row 4")
+            retVal = true; 
+        }
+        //row 5
+        if (checkedSquares[20] && checkedSquares[21] && checkedSquares[22] && checkedSquares[23] && checkedSquares[24]) {
+            // console.log("Bingo on row 5")
+            retVal = true; 
+        }
+        return retVal;
+    }
+    function checkDiagonalBingos(checkedSquares) {
+        let retVal = false;
+        //NW to SE
+        if (checkedSquares[0] && checkedSquares[6] && checkedSquares[12] && checkedSquares[18] && checkedSquares[24]) {
+            // console.log("Bingo on diagonal 1")
+            retVal = true; 
+        }
+        //SW to NE
+        if (checkedSquares[4] && checkedSquares[8] && checkedSquares[12] && checkedSquares[16] && checkedSquares[20]) {
+            // console.log("Bingo on diagonal 2")
+            retVal = true; 
+        }
+        return retVal;
     }
 </script>
 
