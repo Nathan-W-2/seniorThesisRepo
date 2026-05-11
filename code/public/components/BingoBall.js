@@ -1,12 +1,13 @@
 class BingoBall extends HTMLElement {
     static get observedAttributes() {
-        return ['bingo-number'];
+        return ['bingo-number', 'size'];
     }
 
     constructor() {
       super();
       this.attachShadow({ mode: 'open' });
       this.bingoNumber = 1;
+      this.size = 50;
     }
   
     connectedCallback() {
@@ -18,10 +19,16 @@ class BingoBall extends HTMLElement {
         this.bingoNumber = parseInt(newValue);
         this.render();
       }
+      if (name === 'size') {
+        this.size = parseInt(newValue);
+        this.render();
+      }
     }
     
     render() {
       const number = this.getAttribute('bingo-number') || '1';
+      const size = this.getAttribute('size') || '50';
+      const fontSize = size * (2/5);
       // const hasBeenClicked = this.getAttribute('has-been-clicked') || '0';
       
       // const color = this.hasBeenCalled ? 'red' : 'white';
@@ -60,11 +67,11 @@ class BingoBall extends HTMLElement {
               font-optical-sizing: auto;
               font-weight: <weight>;
               font-style: normal;
-              font-size: 20px; 
+              font-size: ${fontSize}px; 
 
               border-radius: 50%;
-              width: 50px;
-              height: 50px; 
+              width: ${size}px;
+              height: ${size}px; 
               display: flex;
               align-items: center;
               justify-content: center;

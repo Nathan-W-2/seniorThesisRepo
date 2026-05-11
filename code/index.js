@@ -19,7 +19,7 @@ const wss = new WebSocket.Server({ server }); // needed for websockets
 
 // websocket 
 wss.on('connection', (socket) => {
-    // console.log('Client connected via WebSocket');
+    console.log('Client connected via WebSocket');
 
     socket.on('message', (event) => {
         const data = JSON.parse(event);
